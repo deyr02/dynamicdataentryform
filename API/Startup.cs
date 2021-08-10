@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Extensions;
+using Application.Forms;
 using Domain;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +40,9 @@ namespace API
          {
              var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
              opt.Filters.Add(new AuthorizeFilter(policy));
-         });
+         }).AddFluentValidation(config=>{
+             config.RegisterValidatorsFromAssemblyContaining<Create>();      
+             });
             services.AddApplicationServices(_config);
             services.AddIdentityService(_config);
 
