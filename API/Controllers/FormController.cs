@@ -6,11 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
 
-    [Authorize(AuthenticationSchemes = "Bearer")]
-    [ApiController]
-    [Route("api/[controller]")]
-
-    public class FormController : ControllerBase
+    // [Authorize(AuthenticationSchemes = "Bearer")]
+    public class FormController : BaseApiController
     {
 
         [HttpGet("formlist")]
@@ -18,6 +15,11 @@ namespace API.Controllers
         {
             return "There is no form created yet...";
         }
+
+        // [HttpPost]
+        // public Task<IActionResult> CreateNewForm(){
+
+        // }
 
     }
 }

@@ -40,9 +40,9 @@ namespace API
              opt.Filters.Add(new AuthorizeFilter(policy));
          });
             services.AddApplicationServices(_config);
-             services.AddIdentityService(_config);
+            services.AddIdentityService(_config);
 
-            
+
 
         }
 
@@ -59,7 +59,9 @@ namespace API
             //app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            //add for react testing learning 
+            app.UseCors("CorsPolicy");
+            ///
             app.UseAuthentication();
             app.UseAuthorization();
 

@@ -24,7 +24,17 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
+            //add for react jest learning purpose
+            services.AddCors(opt =>
+                 {
+                     opt.AddPolicy("CorsPolicy", policy =>
+                     {
+                         policy.AllowAnyMethod().AllowAnyHeader().WithOrigins(new string[] { "http://localhost:3000", "test" });
+                     });
+                 });
 
+            //////
+            
             return services;
         }
     }
