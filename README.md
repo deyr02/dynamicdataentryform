@@ -6,10 +6,12 @@
 
 The main purpose is to sperate applcaiton logic from the APi Layer to make a clean architecure.
 Steps:
+
+
             -> Goto the nuget gallery and type Mediator
-            -> Select
-            MediatR.Extensions.Microsoft.DependencyInjection
+            -> Select MediatR.Extensions.Microsoft.DependencyInjection
             -> Select Application Project and install.
+
 
 
 # Installing Fluent Validation: 
@@ -17,3 +19,13 @@ Steps:
 
             -> Go to Nuget Gallery and search Fluentvalidation
             -> Select FluentValidation.AspNetCore and install it in Application Project. 
+
+
+# Installing Auto Mapper
+## In this project I am going to use AutoMapper to map object while editing a object.
+
+            -> Go to Gallery and search Auttomapper
+            -> Select "AutoMapper.Extensions.Microsoft.DependencyInection by Jimmy Bogard
+            -> Then add this to the Application project
+
+            

@@ -1,4 +1,7 @@
+using Application.Core;
+using Application.Forms;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +37,8 @@ namespace API.Extensions
                  });
 
             //////
+            services.AddMediatR(typeof(List.Handler).Assembly);
+            services.AddAutoMapper(typeof(MappingProfiles).Assembly);
             
             return services;
         }

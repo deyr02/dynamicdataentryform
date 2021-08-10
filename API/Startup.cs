@@ -40,11 +40,13 @@ namespace API
          {
              var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
              opt.Filters.Add(new AuthorizeFilter(policy));
-         }).AddFluentValidation(config=>{
+         })
+         .AddFluentValidation(config=>{
              config.RegisterValidatorsFromAssemblyContaining<Create>();      
              });
             services.AddApplicationServices(_config);
             services.AddIdentityService(_config);
+       
 
 
 

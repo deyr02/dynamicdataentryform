@@ -8,7 +8,7 @@ namespace Application.Forms
         public FormValidator(){
             RuleFor(x=> x.FormName).NotEmpty();
             RuleFor(x=> x.Description).NotEmpty();
-            RuleFor(x=> x.Created).NotEmpty();
+         
         }
     }
 }
