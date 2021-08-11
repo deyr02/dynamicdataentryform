@@ -53,6 +53,47 @@ namespace Persistence
             }
 
 
+
+
+            if (!context.ControlTypes.Any())
+            {
+                var controlTypes = new List<ControlType>
+                {
+                    new ControlType{Name = "TextBox"},
+                    new ControlType{Name = "RadioButtons"},
+                    new ControlType{Name = "CheckBoxs"},
+                    new ControlType{Name = "DropdownList"},
+                };
+
+                foreach (var control in controlTypes)
+                {
+                    context.ControlTypes.Add(control);
+                }
+                await context.SaveChangesAsync();
+            }
+
+
+
+
+            if (!context.DataTypes.Any())
+            {
+                var dataTypes = new List<DataType>
+                {
+                    new DataType{Name = "string"},
+                    new DataType{Name = "Integer"},
+                    new DataType{Name = "double"},
+                    new DataType{Name = "decimal"}
+                    
+                };
+
+                foreach (var dataType in dataTypes)
+                {
+                    context.DataTypes.Add(dataType);
+                }
+                await context.SaveChangesAsync();
+            }
+
+
         }
     }
 }
