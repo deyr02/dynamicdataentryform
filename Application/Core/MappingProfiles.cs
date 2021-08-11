@@ -9,6 +9,7 @@ namespace Application.Core
         {
             CreateMap<Form, Form>();
             CreateMap<Attribute, Attribute>();
+            CreateMap<AttributeValueOption, AttributeValueOption>();
         }
     }
 }
