@@ -8,6 +8,7 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Form, Form>();
+            CreateMap<Attribute, Attribute>();
         }
     }
 }
