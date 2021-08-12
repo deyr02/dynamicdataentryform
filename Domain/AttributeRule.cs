@@ -7,21 +7,21 @@ namespace Domain
     public class AttributeRule
     {
         //Attibute
-        public int AttributeId {get; set;}
-        public Attribute Attribute {get; set;}
+        public int AttributeId { get; set; }
+        public Attribute Attribute { get; set; }
 
         //Rule
-        public int RuleId {get; set;}
-        public Rule Rule{get; set;}
+        public int RuleId { get; set; }
+        public Rule Rule { get; set; }
 
         //other column
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [Required(AllowEmptyStrings = true)]
-        public string Info {get; set;}
-        
+        public string Info { get; set; }
+
         [DisplayFormat(ConvertEmptyStringToNull = false)]
         [Required(AllowEmptyStrings = true)]
-        public string ErrorMessage {get; set;}
+        public string ErrorMessage { get; set; }
 
     }
 }
