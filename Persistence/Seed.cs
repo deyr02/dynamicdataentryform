@@ -60,6 +60,9 @@ namespace Persistence
                 var controlTypes = new List<ControlType>
                 {
                     new ControlType{Name = "TextBox"},
+                    new ControlType{Name = "TextArea"},
+                    new ControlType{Name = "Date Picker"},
+                    new ControlType{Name = "Date and Time picker"},
                     new ControlType{Name = "RadioButtons"},
                     new ControlType{Name = "CheckBoxs"},
                     new ControlType{Name = "DropdownList"},
@@ -80,15 +83,35 @@ namespace Persistence
                 var dataTypes = new List<DataType>
                 {
                     new DataType{Name = "string"},
+                    new DataType{Name = "Date"},
+                    new DataType{Name = "email"},
                     new DataType{Name = "Integer"},
                     new DataType{Name = "double"},
                     new DataType{Name = "decimal"}
-                    
+
                 };
 
                 foreach (var dataType in dataTypes)
                 {
                     context.DataTypes.Add(dataType);
+                }
+                await context.SaveChangesAsync();
+            }
+
+            if ((!context.Rules.Any()))
+            {
+                var rules = new List<Rule>()
+                {
+                    new Rule{Name= "nullable" },
+                    new Rule{Name= "max"},
+                    new Rule{Name= "min"},
+                    new Rule{Name= "Regex"},
+                    new Rule{Name= "File Format"},
+
+                };
+
+                foreach(var rule in rules){
+                    context.Rules.Add(rule);
                 }
                 await context.SaveChangesAsync();
             }
