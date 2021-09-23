@@ -9,8 +9,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210629004347_InititalCreate")]
-    partial class InititalCreate
+    [Migration("20210827025654_Initial-Creae")]
+    partial class InitialCreae
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -89,6 +89,182 @@ namespace Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Domain.Attribute", b =>
+                {
+                    b.Property<int>("AttributeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AttributeName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ControlTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DataTypeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("FormId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AttributeId");
+
+                    b.HasIndex("ControlTypeId");
+
+                    b.HasIndex("DataTypeId");
+
+                    b.HasIndex("FormId");
+
+                    b.ToTable("Attributes");
+                });
+
+            modelBuilder.Entity("Domain.AttributeLog", b =>
+                {
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("LogId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AttributeId", "LogId");
+
+                    b.HasIndex("LogId", "AttributeId");
+
+                    b.ToTable("AttributeLogs");
+                });
+
+            modelBuilder.Entity("Domain.AttributeRule", b =>
+                {
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("RuleId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ErrorMessage")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Info")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AttributeId", "RuleId");
+
+                    b.HasIndex("AttributeId");
+
+                    b.HasIndex("RuleId");
+
+                    b.ToTable("AttributeRules");
+                });
+
+            modelBuilder.Entity("Domain.AttributeValueOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AttributeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Option")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttributeId");
+
+                    b.ToTable("AttributeValueOptions");
+                });
+
+            modelBuilder.Entity("Domain.ControlType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ControlTypes");
+                });
+
+            modelBuilder.Entity("Domain.DataType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("DataTypes");
+                });
+
+            modelBuilder.Entity("Domain.Form", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FormName")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("UserID")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("Domain.Log", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Logs");
+                });
+
+            modelBuilder.Entity("Domain.Rule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Rules");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -232,6 +408,92 @@ namespace Persistence.Migrations
                     b.HasDiscriminator().HasValue("AppRole");
                 });
 
+            modelBuilder.Entity("Domain.Attribute", b =>
+                {
+                    b.HasOne("Domain.ControlType", "ControlType")
+                        .WithMany("Attributes")
+                        .HasForeignKey("ControlTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.DataType", "DataType")
+                        .WithMany("Attributes")
+                        .HasForeignKey("DataTypeId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Form", "Form")
+                        .WithMany("Attributes")
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ControlType");
+
+                    b.Navigation("DataType");
+
+                    b.Navigation("Form");
+                });
+
+            modelBuilder.Entity("Domain.AttributeLog", b =>
+                {
+                    b.HasOne("Domain.Attribute", "Attribute")
+                        .WithMany("Logs")
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Log", "Log")
+                        .WithMany("AttributeLogs")
+                        .HasForeignKey("LogId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("Log");
+                });
+
+            modelBuilder.Entity("Domain.AttributeRule", b =>
+                {
+                    b.HasOne("Domain.Attribute", "Attribute")
+                        .WithMany("Rules")
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Rule", "Rule")
+                        .WithMany("Attributes")
+                        .HasForeignKey("RuleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+
+                    b.Navigation("Rule");
+                });
+
+            modelBuilder.Entity("Domain.AttributeValueOption", b =>
+                {
+                    b.HasOne("Domain.Attribute", "Attribute")
+                        .WithMany("ValueOptions")
+                        .HasForeignKey("AttributeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Attribute");
+                });
+
+            modelBuilder.Entity("Domain.Form", b =>
+                {
+                    b.HasOne("Domain.AppUser", "User")
+                        .WithMany("Forms")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -281,6 +543,45 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.AppUser", b =>
+                {
+                    b.Navigation("Forms");
+                });
+
+            modelBuilder.Entity("Domain.Attribute", b =>
+                {
+                    b.Navigation("Logs");
+
+                    b.Navigation("Rules");
+
+                    b.Navigation("ValueOptions");
+                });
+
+            modelBuilder.Entity("Domain.ControlType", b =>
+                {
+                    b.Navigation("Attributes");
+                });
+
+            modelBuilder.Entity("Domain.DataType", b =>
+                {
+                    b.Navigation("Attributes");
+                });
+
+            modelBuilder.Entity("Domain.Form", b =>
+                {
+                    b.Navigation("Attributes");
+                });
+
+            modelBuilder.Entity("Domain.Log", b =>
+                {
+                    b.Navigation("AttributeLogs");
+                });
+
+            modelBuilder.Entity("Domain.Rule", b =>
+                {
+                    b.Navigation("Attributes");
                 });
 #pragma warning restore 612, 618
         }

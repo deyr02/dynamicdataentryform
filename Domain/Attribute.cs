@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,7 +13,7 @@ namespace Domain
 
 
         //Form
-        public string FormId{get; set;}
+        public Guid FormId{get; set;}
         public Form Form {get; set;}
 
         //Data Types    

@@ -107,10 +107,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("FormId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("FormId1")
+                    b.Property<Guid>("FormId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("AttributeId");
@@ -121,14 +118,12 @@ namespace Persistence.Migrations
 
                     b.HasIndex("FormId");
 
-                    b.HasIndex("FormId1");
-
                     b.ToTable("Attributes");
                 });
 
             modelBuilder.Entity("Domain.AttributeLog", b =>
                 {
-                    b.Property<int>("AttrubuteId")
+                    b.Property<int>("AttributeId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("LogId")
@@ -138,9 +133,9 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("AttrubuteId", "LogId");
+                    b.HasKey("AttributeId", "LogId");
 
-                    b.HasIndex("LogId", "AttrubuteId");
+                    b.HasIndex("LogId", "AttributeId");
 
                     b.ToTable("AttributeLogs");
                 });
@@ -427,8 +422,9 @@ namespace Persistence.Migrations
 
                     b.HasOne("Domain.Form", "Form")
                         .WithMany("Attributes")
-                        .HasForeignKey("FormId1")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("FormId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("ControlType");
 
@@ -441,7 +437,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.Attribute", "Attribute")
                         .WithMany("Logs")
-                        .HasForeignKey("AttrubuteId")
+                        .HasForeignKey("AttributeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

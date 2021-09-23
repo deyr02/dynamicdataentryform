@@ -62,7 +62,7 @@ namespace Persistence
                 .OnDelete(DeleteBehavior.Cascade);
 
 
-            //Attribute - AttributeRole - Role
+            //Attribute - AttributeRule - Rule
             builder.Entity<AttributeRule>()
                 .HasKey(AR => new { AR.AttributeId, AR.RuleId });
 
@@ -79,12 +79,12 @@ namespace Persistence
             //Attribute - AttributeLog - Log
 
             builder.Entity<AttributeLog>()
-                    .HasKey(AL => new { AL.AttrubuteId, AL.LogId });
+                    .HasKey(AL => new { AL.AttributeId, AL.LogId });
 
             builder.Entity<AttributeLog>()
                     .HasOne(A => A.Attribute)
                     .WithMany(AL => AL.Logs)
-                    .HasForeignKey(A => A.AttrubuteId);
+                    .HasForeignKey(A => A.AttributeId);
 
             builder.Entity<AttributeLog>()
                     .HasOne(L => L.Log)

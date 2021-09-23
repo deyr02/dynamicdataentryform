@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain
 {
-    [Index(nameof(LogId), nameof(AttrubuteId))]
+    [Index(nameof(LogId), nameof(AttributeId))]
     public class AttributeLog
     {
         //Attribute
-        public int AttrubuteId {get; set;}
+        public int AttributeId {get; set;}
         public Attribute Attribute {get; set;}
         
 
